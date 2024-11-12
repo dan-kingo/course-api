@@ -1,7 +1,10 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import express from "express";
+const app = express();
+const port = process.env.PORT || 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-console.log(__dirname);
+app.get("/", (_req, res) => {
+  res.send("hellow!");
+});
+app.listen(port, () => {
+  console.log(`server is started at port ${port}`);
+});
