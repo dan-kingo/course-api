@@ -52,6 +52,31 @@ app.post("/api/courses", (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+app.put(
+  "/api/courses/:id",
+  (req: Request, res: Response, next: NextFunction) => {
+    try {
+      let course = courses.find((c) => c.id === parseInt(req.params.id));
+      if (!course)
+        res.status(404).send(`course with id ${req.params.id} is not found!`);
+
+      // update the course and send it to the client
+      const result = schema.parse(req.body);
+      course.name = result.name;
+      res.send(course);
+      next();
+    } catch (err) {
+      if (err instanceof ZodError) {
+        const errorMessages = err.errors.map((issue: any) => ({
+          message: `${issue.path.join(".")} is ${issue.message}`,
+        }));
+        res.status(400).json({ error: "Invalid data", details: errorMessages });
+      } else {
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    }
+  }
+);
 app.listen(port, () => {
   console.log(`server is started at port ${port}`);
 });
