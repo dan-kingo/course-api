@@ -77,6 +77,21 @@ app.put(
     }
   }
 );
+
+app.delete(
+  "/api/courses/:id",
+  (req: Request, res: Response, next: NextFunction) => {
+    let course = courses.find((c) => c.id === parseInt(req.params.id));
+    if (!course)
+      res.status(404).send(`course with id ${req.params.id} is not found!`);
+
+    let index = courses.indexOf(course);
+    courses.splice(index, 1);
+
+    res.send(course);
+    next();
+  }
+);
 app.listen(port, () => {
   console.log(`server is started at port ${port}`);
 });
