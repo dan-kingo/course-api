@@ -7,15 +7,6 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 const app = express();
 const port = process.env.PORT || 3000;
-export default interface Course {
-  id: number;
-  name: string;
-}
-export const courses: Course[] = [
-  { id: 1, name: "course 1" },
-  { id: 2, name: "course 2" },
-  { id: 3, name: "course 3" },
-];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

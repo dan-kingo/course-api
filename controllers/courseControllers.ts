@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Course, { courses } from "..";
+import courses, { Course } from "../models/courses";
 
 export const getAllCourse = (_req: Request, res: Response) => {
   res.send(courses);

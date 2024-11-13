@@ -1,2 +1,1 @@
-::1 - - [13/Nov/2024:06:34:45 +0000] "GET /api/courses/ HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
-::1 - - [13/Nov/2024:06:35:16 +0000] "DELETE /api/courses/10 HTTP/1.1" 400 67 "-" "PostmanRuntime/7.42.0"
+::1 - - [13/Nov/2024:07:06:31 +0000] "GET /api/courses/ HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
