@@ -1,6 +1,10 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
+import { z, ZodError } from "zod";
 const app = express();
 const port = process.env.PORT || 3000;
+const schema = z.object({
+  name: z.string().min(3, "name must be at least 3 characters long!"),
+});
 
 interface Course {
   id: number;
@@ -24,14 +28,28 @@ app.get("/api/courses/:id", (req, res) => {
   res.send(course);
 });
 
-app.post("/api/courses", (req, res) => {
-  const course: Course = {
-    id: courses.length + 1,
-    name: req.body.name,
-  };
-  courses.push(course);
+app.post("/api/courses", (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = schema.parse(req.body);
+    const course: Course = {
+      id: courses.length + 1,
+      name: result.name,
+    };
+    courses.push(course);
 
-  res.send(course);
+    res.send(course);
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      console.log(error.errors);
+      const errorMessages = error.errors.map((issue: any) => ({
+        message: `${issue.path.join(".")} is ${issue.message}`,
+      }));
+      res.status(400).json({ error: "Invalid data", details: errorMessages });
+    } else {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
 });
 
 app.listen(port, () => {
