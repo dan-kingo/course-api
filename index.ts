@@ -6,6 +6,8 @@ import debug from "debug"
 import path, { dirname } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import mongoose from 'mongoose'
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -20,6 +22,9 @@ const accessLogStream = fs.createWriteStream(
     flags: "a",
   }
 );
+
+// conecting to db
+mongoose.connect('mongodb://localhost/courses').then(() => {dbDebug('connected to db')}).catch((err) => {dbDebug(err)})
 
 app.use(express.json());
 app.use(cors());
