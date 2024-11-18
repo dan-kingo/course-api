@@ -38,18 +38,29 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model('Course', courseSchema)
 
 const course = new Course({
-  name: 'Node.js',
-  author: 'Mosh',
-  price: 10,
+  name: 'ASP.Net Course',
+  author: 'Daboss',
+  price: 22,
   isPublished: true,
-  tags: ['node', 'backend'],
+  tags: ['C#', 'backend'],
 })
 
 const createCourse = async () => {
   const result = await course.save()
   dbDebug(result)
 }
-createCourse()
+
+// get courses 
+
+
+const getCourses = async () => {
+  const courses = await Course.find({name: /.*net.*/i})
+                              .select({name: 1, tags: 1, author: 1})
+                              .sort({name: 1})
+                              .limit(10)
+  dbDebug(courses)
+}
+getCourses()
 
 
 
