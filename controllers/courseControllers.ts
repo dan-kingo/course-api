@@ -1,45 +1,59 @@
 import { Request, Response } from "express";
-import courses, { Course } from "../models/courses";
+import Course from "../models/courses";
 
-export const getAllCourse = (_req: Request, res: Response) => {
-  res.send(courses);
+export const getAllCourse = async(_req: Request, res: Response) => {
+  try{
+    const courses = await Course.find();
+    res.json(courses);
+  }catch(err){
+    res.status(400).send((err as Error).message);
+  }
+  
 };
 
-export const getCourse = (req: Request, res: Response) => {
-  const course = courses.find((c) => c.id === parseInt(req.params.id));
+export const getCourse = async (req: Request, res: Response) => {
+  const course = await Course.findById(req.params.id);
 
-  if (!course)
-    res.status(404).send(`ther is no course with id ${req.params.id}`);
-  res.send(course);
+  if (!course){
+     res.status(404).send(`ther is no course with id ${req.params.id}`);
+  }else{
+
+    res.send(course);
+  }
 };
 
-export const addCourse = (req: Request, res: Response) => {
-  const course: Course = {
-    id: courses.length + 1,
+export const addCourse = async (req: Request, res: Response) => {
+  const course = new Course({
     name: req.body.name,
-  };
-  courses.push(course);
-
-  res.send(course);
+    price: req.body.price,
+    author: req.body.author,
+    tags: req.body.tags,
+    isPublished: req.body.isPublished,
+  })
+  try {
+    await course.save(); // Save the course to the database
+    res.send(course);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send((error as Error).message);
+  }
 };
 
-export const deleteCourse = (req: Request, res: Response) => {
-  let course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course)
+export const deleteCourse = async (req: Request, res: Response) => {
+  let course = await Course.findByIdAndDelete(req.params.id);
+  if (!course){
     res.status(404).send(`course with id ${req.params.id} is not found!`);
+  }else{
+    res.send(course);
+  }
 
-  let index = courses.indexOf(course);
-  courses.splice(index, 1);
-
-  res.send(course);
 };
 
-export const updateCourse = (req: Request, res: Response) => {
-  let course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course)
+export const updateCourse = async (req: Request, res: Response) => {
+  let course = await Course.updateOne({ _id: req.params.id }, { name: req.body.name });
+  if (!course){
     res.status(404).send(`course with id ${req.params.id} is not found!`);
-
-  // update the course and send it to the client
-  course.name = req.body.name;
+  }else{
   res.send(course);
+  }
 };

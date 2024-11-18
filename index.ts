@@ -70,7 +70,7 @@ const removeCourse = async (id:string) => {
   const result = await Course.findByIdAndDelete(id, {new: true})
   dbDebug(result)
 }
-createCourse()
+// createCourse()
 
 
 

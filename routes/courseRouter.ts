@@ -14,7 +14,7 @@ const router = Router();
 router.get("/courses", getAllCourse);
 router.get("/courses/:id", getCourse);
 router.post("/courses", validateData(schema), addCourse);
-router.put("/courses/:id", validateData(schema), updateCourse);
-router.delete("/courses/:id", validateData(schema), deleteCourse);
+router.put("/courses/:id", updateCourse);
+router.delete("/courses/:id", deleteCourse);
 
 export default router;
