@@ -2,6 +2,7 @@ import express from "express";
 import router from "./routes/courseRouter";
 import cors from "cors";
 import morgan from "morgan";
+import debug from "debug"
 import path, { dirname } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
@@ -10,6 +11,8 @@ const port = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const dbDebug = debug("app:db");
+const appDebug = debug("app:startup");
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "logs", "access.log"),
@@ -24,5 +27,5 @@ app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use("/api", router);
 app.listen(port, () => {
-  console.log(`server is started at port ${port}`);
+  appDebug(`server is started at port ${port}`);
 });
