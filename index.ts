@@ -73,7 +73,14 @@ const updateCourse = async (id:string) => {
   }, {new: true})
   dbDebug(result)
 }
-updateCourse('673b12fdfd4824eb13fc2ed6')
+
+// removing a document 
+
+const removeCourse = async (id:string) => {
+  const result = await Course.findByIdAndDelete(id, {new: true})
+  dbDebug(result)
+}
+removeCourse('673b12fdfd4824eb13fc2ed6')
 
 
 
