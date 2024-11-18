@@ -6,7 +6,7 @@ import debug from "debug"
 import path, { dirname } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import mongoose from 'mongoose'
+import mongoose, { ObjectId } from 'mongoose'
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -62,15 +62,15 @@ const getCourses = async () => {
   dbDebug(courses)
 }
 
-const updateCourse = async (id) => {
-  const course =  await Course.findById(id)
-  if(!course) return
-  course.set({
-    name: 'Angular Course',
-    price: 55,
-    isPublished: false
-  })
-  const result = await course.save()
+//update directly
+const updateCourse = async (id:string) => {
+  const result = await Course.findByIdAndUpdate(id, {
+    $set: {
+      name: 'React.js Course',
+      price: 30,
+      author: 'Dagmaros'
+    }
+  }, {new: true})
   dbDebug(result)
 }
 updateCourse('673b12fdfd4824eb13fc2ed6')
