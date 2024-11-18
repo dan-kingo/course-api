@@ -31,6 +31,7 @@ const courseSchema = new mongoose.Schema({
   name: String,
   author: String,
   price: Number,
+  isPublished: Boolean,
   tags: [String],
   date: {type: Date, default: Date.now},
 })
@@ -60,7 +61,19 @@ const getCourses = async () => {
                               .limit(10)
   dbDebug(courses)
 }
-getCourses()
+
+const updateCourse = async (id) => {
+  const course =  await Course.findById(id)
+  if(!course) return
+  course.set({
+    name: 'Angular Course',
+    price: 55,
+    isPublished: false
+  })
+  const result = await course.save()
+  dbDebug(result)
+}
+updateCourse('673b12fdfd4824eb13fc2ed6')
 
 
 
