@@ -24,7 +24,34 @@ const accessLogStream = fs.createWriteStream(
 );
 
 // conecting to db
-mongoose.connect('mongodb://localhost/courses').then(() => {dbDebug('connected to db')}).catch((err) => {dbDebug(err)})
+mongoose.connect('mongodb://localhost/playground').then(() => {dbDebug('connected to db')}).catch((err) => {dbDebug(err)})
+
+// create a schema 
+const courseSchema = new mongoose.Schema({
+  name: String,
+  author: String,
+  price: Number,
+  tags: [String],
+  date: {type: Date, default: Date.now},
+})
+// creating a model 
+const Course = mongoose.model('Course', courseSchema)
+
+const course = new Course({
+  name: 'Node.js',
+  author: 'Mosh',
+  price: 10,
+  isPublished: true,
+  tags: ['node', 'backend'],
+})
+
+const createCourse = async () => {
+  const result = await course.save()
+  dbDebug(result)
+}
+createCourse()
+
+
 
 app.use(express.json());
 app.use(cors());
