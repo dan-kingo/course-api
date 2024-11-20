@@ -30,7 +30,7 @@ mongoose.connect('mongodb://localhost/playground').then(() => {dbDebug('connecte
 
 app.use(express.json());
 app.use(cors());
-app.use(morgan("combined", { stream: accessLogStream }));
+// app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use("/api", router);
 app.use('/', authorsRouter)
