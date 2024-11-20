@@ -50,7 +50,7 @@ export const deleteCourse = async (req: Request, res: Response) => {
 };
 
 export const updateCourse = async (req: Request, res: Response) => {
-  let course = await Course.updateOne({ _id: req.params.id }, { name: req.body.name });
+  let course = await Course.updateOne({ _id: req.params.id }, { name: req.body.name },{new: true});
   if (!course){
     res.status(404).send(`course with id ${req.params.id} is not found!`);
   }else{
