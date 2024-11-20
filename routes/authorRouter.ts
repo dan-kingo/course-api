@@ -5,6 +5,6 @@ import authorSchema from '../schemas/authorSchema';
 
 const authorsRouter = Router();
 
-authorsRouter.post('/authors',validateData(authorSchema), createAuthor);
-authorsRouter.get('/authors', getAuthors);
+authorsRouter.post('/',validateData(authorSchema), createAuthor);
+authorsRouter.get('/', getAuthors);
 export default authorsRouter;
