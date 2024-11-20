@@ -7,6 +7,7 @@ import path, { dirname } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import mongoose from 'mongoose'
+import authorsRouter from "./routes/authorRouter";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.use(cors());
 app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use("/api", router);
+app.use('/', authorsRouter)
 app.listen(port, () => {
   appDebug(`server is started at port ${port}`);
 });
