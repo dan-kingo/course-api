@@ -1,6 +1,6 @@
 import User from "../models/users";
 import { Request, Response } from "express";
-
+import _ from "lodash";
 
 const createUser = async (req: Request, res: Response) => {
     
@@ -11,15 +11,11 @@ const createUser = async (req: Request, res: Response) => {
          res.status(400).send('User already registered');
     }
 else{
-         user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        });
+         user = new User(_.pick(req.body, ["name", "email","password"]));
     }
         try {
-            const result=  await user.save();
-             res.send(result);
+             await user.save();
+             res.send(_.pick(user, ["_id", "name", "email"]));
            } catch (error) {
              console.log(error);
              res.status(400).send((error as Error).message);

@@ -1,12 +1,9 @@
 import {Request, Response} from "express";
+import _ from "lodash";
 import Author from "../models/author";
 
 const createAuthor = async (req: Request, res: Response) => {
-  const author = new Author({
-    name: req.body.name,
-    bio: req.body.bio,
-    website: req.body.website,
-  });
+  const author = new Author(_.pick(req.body, ["name", "bio", "website"]));
   try {
    const result=  await author.save();
     res.send(result);

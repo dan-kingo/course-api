@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Course from "../models/courses";
+import _ from "lodash";
 
 export const getAllCourse = async(_req: Request, res: Response) => {
   try{
@@ -23,15 +24,9 @@ export const getCourse = async (req: Request, res: Response) => {
 };
 
 export const addCourse = async (req: Request, res: Response) => {
-  const course = new Course({
-    name: req.body.name,
-    price: req.body.price,
-    author: req.body.author,
-    tags: req.body.tags,
-    isPublished: req.body.isPublished,
-  })
+  const course = new Course(_.pick(req.body, ["name", "author","price","isPublished","tags"])); 
   try {
-    await course.save(); // Save the course to the database
+    await course.save();
     res.send(course);
   } catch (error) {
     console.log(error);

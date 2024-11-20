@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/lodash": "^4.17.13",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.9.0",
     "tsx": "^4.19.2",
@@ -23,6 +24,7 @@
     "date-fns": "^4.1.0",
     "debug": "^4.3.7",
     "express": "^4.21.1",
+    "lodash": "^4.17.21",
     "mongoose": "^8.8.1",
     "morgan": "^1.10.0",
     "uuid": "^11.0.3",
