@@ -3,7 +3,7 @@ import Course from "../models/courses";
 
 export const getAllCourse = async(_req: Request, res: Response) => {
   try{
-    const courses = await Course.find();
+    const courses = await Course.find().populate('author', '-_id');
     res.json(courses);
   }catch(err){
     res.status(400).send((err as Error).message);

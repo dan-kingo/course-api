@@ -18,7 +18,7 @@ const createAuthor = async (req: Request, res: Response) => {
 
 const getAuthors = async (_req: Request, res: Response) => {
 try{
-  const authors = await Author.find();
+  const authors = await Author.find()
   res.json(authors);
 }  catch(err){
   res.status(400).send((err as Error).message);
