@@ -2,6 +2,8 @@ import User from "../models/users";
 import { Request, Response } from "express";
 import _ from "lodash";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import config from "config";
 
 const createUser = async (req: Request, res: Response) => {
     
@@ -18,7 +20,8 @@ else{
     }
         try {
              await user.save();
-             res.send(_.pick(user, ["_id", "name", "email"]));
+             const token = jwt.sign({ _id: user._id }, config.get("jwtKey"));
+             res.header('x-auth-token', token).send(_.pick(user, ["_id", "name", "email"]));
            } catch (error) {
              console.log(error);
              res.status(400).send((error as Error).message);
