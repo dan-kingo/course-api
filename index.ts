@@ -10,7 +10,13 @@ import mongoose from 'mongoose'
 import authorsRouter from "./routes/authorRouter";
 import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
+import config from 'config'
 
+const jwtKey = config.get('jwtKey')
+if(!jwtKey){
+  console.error('FATAL ERROR: jwtKey is not defined')
+  process.exit(1)
+} 
 const app = express();
 const port = process.env.PORT || 3000;
 

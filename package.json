@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/config": "^3.3.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.13",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "config": "^3.3.12",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "debug": "^4.3.7",
