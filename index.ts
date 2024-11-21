@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import mongoose from 'mongoose'
 import authorsRouter from "./routes/authorRouter";
 import userRouter from "./routes/userRouter";
+import authRouter from "./routes/authRouter";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,6 +37,8 @@ app.use(cors());
 app.use("/api/courses", router);
 app.use('/api/authors', authorsRouter)
 app.use('/api/users', userRouter)
+app.use('/api/auth', authRouter)
+
 app.listen(port, () => {
   appDebug(`server is started at port ${port}`);
 });
