@@ -1,6 +1,7 @@
 import{Request, Response} from 'express';
 import User from '../models/users';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const authenticate = async (req: Request, res: Response) => {
 const user = await User.findOne({email:req.body.email});
@@ -14,7 +15,9 @@ const validPassword = await bcrypt.compare(req.body.password, user.password);
 if(!validPassword) {
 res.status(400).json({message: 'Invalid email or password'});
 }else{
-    res.send('User authenticated');
+
+    const token = jwt.sign({_id: user._id}, 'jwtKey')
+    res.send(token);
 }
 
 }
