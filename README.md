@@ -227,9 +227,6 @@ The API returns appropriate HTTP status codes:
 4. Add tests if applicable
 5. Submit a pull request
 
-## License
-
-ISC License
 
 ## Notes
 
